@@ -2,7 +2,7 @@
   "mq": {
     "engine": {
       "uri": "tcp://127.0.0.1:8800",
-      "topic": "backtest"
+      "topic": "historic"
     }
   }
 }

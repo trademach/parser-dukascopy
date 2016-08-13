@@ -24,7 +24,7 @@ function runBacktest() {
     const tickData = data.split('\n').map(l => l.split(','));
     const ticks = tickData.map(arr => {
       return {
-        source: 'backtest',
+        source: MQ_ENGINE_TOPIC,
         time: new Date(arr[0]),
         instrument: instrument,
         ask: Number(arr[1]),
