@@ -21,20 +21,25 @@ function runBacktest() {
   const instrument = config.get('data.instrument');
 
   fs.readFile(`data/${fileName}`, 'utf8', (err, data) => {
-    console.log(data);
-
     const tickData = data.split('\n').map(l => l.split(','));
     const ticks = tickData.map(arr => {
       return {
         source: 'backtest',
         time: new Date(arr[0]),
         instrument: instrument,
-        ask: arr[1],
-        bid: arr[2]
+        ask: Number(arr[1]),
+        bid: Number(arr[2])
       };
     });
 
-    console.log(ticks);
+    ticks.forEach(t => {
+      socketEngine.send([
+        MQ_ENGINE_TOPIC,
+        JSON.stringify(t)
+      ]);
+    });
+
+    console.log(`all sent: ${instrument}`);
   });
 }
 
